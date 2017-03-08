@@ -1,10 +1,7 @@
-#pragma once
 
 #include <string>
-#include <deque>
 #include <map>
 using std::string;
-using std::deque;
 using std::map;
 
 //struct Single_Book{
@@ -14,10 +11,19 @@ using std::map;
 
 class Book {
 	string Book_Name;
-	string Writer;
+	//string Writer;
 	int Repertory_number;
 	int Remain_number;
-	bool 
+	bool book_status;
+public:
+	Book();
+	Book(string, int, bool);
+	void add_number();
+//	void decrease_number();
+	bool get_status() { return book_status; }
+	bool Borrow();
+	bool Return();
+	void Print();
 };
 
 
