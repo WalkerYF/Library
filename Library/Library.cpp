@@ -86,9 +86,8 @@ bool Library::add_book()
 	string t_name;
 	cout << "Please write down the book name which you want to add:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name);
+	auto find_this_book = Library_Book.find(t_name); 
 	// get the iterator pointing to this kind of book or the of-the-end iterator.
-
 	if (find_this_book == Library_Book.end()) 
 	// can not find this book, so create a new kind of book object.
 	{
@@ -96,6 +95,7 @@ bool Library::add_book()
 			<< "You must enter extra information about this book to create a record." << endl;
 		
 		//maybe some more information.
+/////////////////////////////////////////////
 
 		//create a new ojbect.
 		Library_Book[t_name] = Book(t_name);
@@ -130,7 +130,7 @@ bool Library::delete_book()
 	{
 		Library_Book.erase(find_this_book);
 		//auto cur_book_pair = *find_this_book;
-		////decrease the number of this book.
+		//decrease the number of this book.
 		//cur_book_pair.second.decrease_number;
 		return true;
 	}

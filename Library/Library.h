@@ -1,13 +1,22 @@
 
 #include <string>
+#include <vector>
 #include <map>
+
+using std::vector;
 using std::string;
 using std::map;
 
-//struct Single_Book{
-//	string id;
-//	
-//};
+class Single_Book{
+	string Id;
+	string Book_Name;
+	//string Writer;
+	//bool book_status;
+	//some more information
+public:
+	Single_Book() {};
+	Single_Book(string, string, bool)
+};
 
 class Book {
 	string Book_Name;
@@ -15,6 +24,9 @@ class Book {
 	int Repertory_number;
 	int Remain_number;
 	bool book_status;
+
+	vector<Single_Book> Same_Book;
+
 public:
 	Book();
 	Book(string, int, bool);
