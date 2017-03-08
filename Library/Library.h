@@ -11,11 +11,13 @@ class Single_Book{
 	string Id;
 	string Book_Name;
 	//string Writer;
-	//bool book_status;
+	bool book_status;
 	//some more information
 public:
 	Single_Book() {};
-	Single_Book(string, string, bool)
+	Single_Book(string, string, bool);
+	void Print();
+	void set_status();
 };
 
 class Book {
@@ -30,13 +32,15 @@ class Book {
 public:
 	Book();
 	Book(string, int, bool);
-	void add_number();
-//	void decrease_number();
+	void Add();
+	bool Decrease();
+	bool can_delete_all();
 	bool get_status() { return book_status; }
 	bool Borrow();
 	bool Return();
 	void Print();
 };
+
 
 
 class Library {
@@ -48,4 +52,6 @@ public:
 	bool borrow_book();
 	bool return_book();
 	bool find();
+	void print();
 };
+

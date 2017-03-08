@@ -24,7 +24,7 @@ int main()
 	cout << "***                            All Copyright by Walker.  ***" << endl;
 	cout << "************************************************************" << endl;
 	cout << "Now, we will give you several soconds to read these instructions." << endl;
-	for (int i = 0; i < NUM; i++) {};
+	//for (int i = 0; i < NUM; i++) {};
 	cout << endl;
 	cout << "Ok, now you have read these instructions." << endl;
 	cout << "Please enter any key to continue......." << endl;
@@ -62,6 +62,11 @@ int main()
 		case 'f':
 		{
 			library.find();
+			break;
+		}
+		case 'p':
+		{
+			library.print();
 			break;
 		}
 		default:
