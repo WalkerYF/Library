@@ -1,9 +1,12 @@
 #include "Library.h"
 #include <iostream>
 #include <string>
+#include <iomanip>
+
 using std::cin;
 using std::cout;
 using std::endl;
+using std::setw;
 
 
 Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
@@ -15,13 +18,18 @@ Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 
 void Single_Book::Print()
 {
-	cout << Id << "  " << Book_Name << "  " << ((book_status) ? "can be borrowed." : "has been borrowed." )<< endl;
+	cout << setw(8)  << Id 
+		 << setw(10) << Book_Name 
+		 << setw(8)  << ((book_status) ? "¡Ì" : "¡Á" )
+		 << endl;
 }
+
 
 void Single_Book::set_status()
 {
 	book_status = !book_status;
 }
+
 
 Book::Book()
 {
@@ -39,6 +47,54 @@ Book::Book(string t_name, int t_rep_number = 0, bool t_status = false)
 	book_status = t_status;
 }
 
+bool Book::is_exist(string t_id)
+{
+	auto find_single_book = Same_Book.find(t_id);
+	if (find_single_book == Same_Book.end())
+	{
+		cout << "This book are not exist." << endl;
+		cout << endl;
+		return false;
+	}
+	return true;
+}
+
+bool Book::is_exist_not_borrowed(string t_id)
+{
+	auto find_single_book = Same_Book.find(t_id);
+	if (find_single_book == Same_Book.end())
+	{
+		cout << "This book are not exist." << endl;
+		cout << endl;
+		return false;
+	}
+	else if (find_single_book->second.get_status() == false)
+	{
+		cout << "This book has been borrowed." << endl;
+		cout << endl;
+		return false;
+	}
+	return true;
+}
+
+bool Book::is_exist_borrowed(string t_id)
+{
+	auto find_single_book = Same_Book.find(t_id);
+	if (find_single_book == Same_Book.end())
+	{
+		cout << "This book are not exist." << endl;
+		cout << endl;
+		return false;
+	}
+	else if (find_single_book->second.get_status() == true)
+	{
+		cout << "This book has not been borrowed." << endl;
+		cout << endl;
+		return false;
+	}
+	return true;;
+}
+
 void Book::Add()
 {
 	if (book_status == false)
@@ -49,7 +105,8 @@ void Book::Add()
 	Remain_number++;
 	string t_id = Book_Name + char(Repertory_number+48);
 	//the generation of id
-	Same_Book.push_back(Single_Book(t_id, Book_Name, true));
+/////////////////////////////////////////
+	Same_Book.insert ({ t_id, Single_Book(t_id, Book_Name, true) });
 }
 
 bool Book::can_delete_all()
@@ -68,13 +125,25 @@ bool Book::Decrease()
 		cout << "You can't delete this book" << endl;
 		return false;
 	}
-	else {
-		Same_Book.pop_back();
-		Repertory_number--;
-		Remain_number--;
-		cout << "This book has deleted successfully" << endl;
-		cout << endl;
-		return true;
+	else 
+	{
+		cout << "Please write down the id of your book." << endl;
+		string t_id;
+		cin >> t_id;
+
+		if (is_exist_not_borrowed(t_id))
+		{
+			Same_Book.erase(t_id);
+			Repertory_number--;
+			Remain_number--;
+			cout << "This book has deleted successfully" << endl;
+			cout << endl;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
 
@@ -88,12 +157,24 @@ bool Book::Borrow()
 	}
 	else
 	{
-		Same_Book[Repertory_number - Remain_number].set_status();
-		Remain_number--;
-		//reflesh the status of book.
-		book_status = (Remain_number) ? true : false;
-		cout << "You has borrowed this book successfully!" << endl;
-		return true;
+		cout << "Please write down the id of your book." << endl;
+		string t_id;
+		cin >> t_id;
+
+		if (is_exist_not_borrowed(t_id))
+		{
+			Same_Book[t_id].set_status();
+			Remain_number--;
+			//reflesh the status of book.
+			book_status = (Remain_number) ? true : false;
+			cout << "You has borrowed this book successfully!" << endl;
+			cout << endl;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
 
@@ -102,56 +183,83 @@ bool Book::Return()
 	if (Remain_number == Repertory_number)
 	{
 		cout << "No this kind of books has been borrowed." << endl;
+		cout << endl;
 		return false;
 	}
-	book_status = true;
-	Same_Book[Repertory_number - Remain_number - 1].set_status();
-	Remain_number++;
-	cout << "You has returned this book successfully" << endl;
-	return true;
+	cout << "Please write down the id of your book." << endl;
+	string t_id;
+	cin >> t_id;
+
+	if (is_exist_borrowed(t_id))
+	{
+		Same_Book[t_id].set_status();
+		Remain_number++;
+		book_status = true;
+		cout << "You has returned this book successfully" << endl;
+		cout << endl;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
 }
 
 void Book::Print()
 {
-	cout << "The book you want to know is " << Book_Name << "." << endl
-		<< "In this library, the rapertory of this book is " << Repertory_number << " .\n"
-		<< "Now " << Remain_number
-		<< ((Remain_number > 1) ? " book" : " books") << " can be borrowed." << endl;
-	cout << "id      name       status" << endl;
+	cout << endl;
+	cout << "Book's name: " << Book_Name << endl;
+	cout << setw(8)  << "id"
+		 << setw(10) << "name"
+		 << setw(8)  << "status" 
+		 << endl;
 	for (auto i : Same_Book)
-		i.Print();
+		i.second.Print();
+	cout << "total | remain:" 
+		 << setw(5) << Repertory_number 
+		 << "|" 
+		 << setw(5) << Remain_number << endl;
 }
 
+bool Library::is_exist(string t_name)
+{
+	auto find_this_book = Library_Book.find(t_name);
+	if (find_this_book == Library_Book.end())
+		// can not find this book, so fail to borrow this book.
+	{
+		cout << "This book are not exist in this library." << endl;
+		return false;
+	}
+	return true;
+}
 
 bool Library::add_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to add:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name); 
-	// get the iterator pointing to this kind of book or the of-the-end iterator.
-	if (find_this_book == Library_Book.end()) 
-	// can not find this book, so create a new kind of book object.
-	{
-		cout << "This book is not exist." << endl
-			<< "You must enter extra information about this book to create a record." << endl;
-		
-		//maybe some more information.
-	/////////////////////////////////////////////
-		//create a new ojbect.
-		Library_Book[t_name] = Book(t_name);
-		find_this_book = Library_Book.find(t_name);
-		//debug
-	}
+	if ( is_exist(t_name	)) 
 
-	else
 	{
 		cout << "This book exists." << endl;
 		cout << "We will increase the number of this book." << endl;
 	}
 
+	else
+	// can not find this book, so create a new kind of book object.
+	{
+		cout << "You may enter extra information about this book to create a record." << endl;
+
+		//maybe some more information.
+/////////////////////////////////////////////
+		//create a new ojbect.
+		Library_Book[t_name] = Book(t_name);
+		//debug
+	}
+
 	//increase the number of this book.
-	find_this_book->second.Add();
+	Library_Book[t_name].Add();
 	cout << endl;
 	return true;
 }
@@ -161,30 +269,25 @@ bool Library::delete_book()
 	string t_name;
 	cout << "Please write down the book name which you want to add:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name);
 
-	if (find_this_book == Library_Book.end())
-	// can not find this book, so fail to delete this book.
+	if (is_exist(t_name))
 	{
-		cout << "This book is not exist." << endl
-			<< "You can not delete this book." << endl;
-		return false;
-	}
-	else
-	// find this book, so delete this book ojbect.
-	{
-		if (find_this_book->second.can_delete_all())
+		if (Library_Book[t_name].can_delete_all())
 		{
-			Library_Book.erase(find_this_book);
+			Library_Book.erase(t_name);
 			cout << "This book has deleted successfully" << endl;
 			cout << endl;
 			return true;
 		}
-
 		else
 		{
-			return find_this_book->second.Decrease();
+			return Library_Book[t_name].Decrease();
 		}
+	}
+	else
+		// can not find this book, so fail to delete this book.
+	{
+		return false;
 	}
 }
 
@@ -193,17 +296,14 @@ bool Library::borrow_book()
 	string t_name;
 	cout << "Please write down the book name which you want to borrow:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name);
-	if (find_this_book == Library_Book.end() )
+	if ( is_exist(t_name) )
 	// can not find this book, so fail to borrow this book.
 	{
-		cout << "This book is not exist." << endl
-			<< "You can not borrow this book." << endl;
-		return false;
+		return Library_Book[t_name].Borrow();
 	}
 	else
 	{
-		return find_this_book->second.Borrow();
+		return false;
 	}
 }
 
@@ -212,40 +312,34 @@ bool Library::return_book()
 	string t_name;
 	cout << "Please write down the book name which you want to return:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name);
-	if (find_this_book == Library_Book.end())
+	if (is_exist(t_name))
 	{
-		cout << "Are you kidding??" << endl
-			<< "There is no this book in this library." << endl;
-		return false;
+		return Library_Book[t_name].Return();
 	}
 	else
 	{
-		return find_this_book->second.Return();
+		return false;
 	}
 }
 
 
-bool Library::find()
+bool Library::find_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to find:" << endl;
 	cin >> t_name;
-	auto find_this_book = Library_Book.find(t_name);
-	if (find_this_book == Library_Book.end())
+	if (is_exist(t_name))
 	{
-		cout << "Are you kidding??" << endl
-			<< "There is no this book in this library." << endl;
-		return false;
+		Library_Book[t_name].Print();
+		return true;
 	}
 	else
 	{
-		find_this_book->second.Print();
-		return true;
+		return false;
 	}
 }
 
-void Library::print()
+void Library::print_book()
 {
 	for (auto i : Library_Book)
 		i.second.Print();

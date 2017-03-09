@@ -61,12 +61,12 @@ int main()
 		}
 		case 'f':
 		{
-			library.find();
+			library.find_book();
 			break;
 		}
 		case 'p':
 		{
-			library.print();
+			library.print_book();
 			break;
 		}
 		default:
@@ -81,5 +81,8 @@ int main()
 		cout << "If you enter 'q', you will quit this system." << endl;
 
 	}
+	cout << endl;
+	cout << "You has quited this system." << endl;
+	system("pause");
 	return 0;
 }
