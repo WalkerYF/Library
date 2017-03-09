@@ -46,7 +46,7 @@ void Single_Book::Print() const
 {
 	cout << setw(8)  << Id 
 		 << setw(10) << Book_Name 
-		 << setw(8)  << ((book_status) ? "¡Ì" : "¡Á" )
+		 << setw(8)  << ((book_status) ? "Yes" : "No" )
 		 << endl;
 }
 

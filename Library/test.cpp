@@ -24,13 +24,11 @@ int main()
 	cout << "***                            All Copyright by Walker.  ***" << endl;
 	cout << "************************************************************" << endl;
 	cout << "Now, we will give you several soconds to read these instructions." << endl;
-	//for (int i = 0; i < NUM; i++) {};
+	//for (int i = 0; i < 20000; i++) {};
 	cout << endl;
 	cout << "Ok, now you have read these instructions." << endl;
-	cout << "Please enter any key to continue......." << endl;
-	system("pause");
-
-
+	cout << "Please enter carriage return to continue......." << endl;
+	cin.get();
 	string choice;
 	Library library;
 
@@ -85,6 +83,7 @@ int main()
 	}
 	cout << endl;
 	cout << "You has quited this system." << endl;
-	system("pause");
+	cout << "Please enter carriage return to continue......." << endl;
+	cin.get();
 	return 0;
 }
