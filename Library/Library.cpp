@@ -130,9 +130,9 @@ void Book::Add()
 	Repertory_number++;
 	Remain_number++;
 	seed++;
+
 	string t_id = Book_Name + change_int_to_string(seed);
 	//the generation of id
-/////////////////////////////////////////
 	Same_Book.insert ({ t_id, Single_Book(t_id, Book_Name, true) });
 } 
 

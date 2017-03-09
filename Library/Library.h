@@ -1,9 +1,7 @@
 
 #include <string>
-#include <vector>
 #include <map>
 
-using std::vector;
 using std::string;
 using std::map;
 
