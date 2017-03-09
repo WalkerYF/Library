@@ -10,20 +10,20 @@ using std::string;
 int main()
 {
 	using namespace std;
-	cout << "************************************************************" << endl;
-	cout << "***      Welcome to the Book Managerment System.         ***" << endl;
-	cout << "*** Before you use these system,                         ***" << endl;
-	cout << "*** Please read these instructions carefully.            ***" << endl;
-	cout << "*** If you want to add books ,please enter 'a'.          ***" << endl;
-	cout << "*** If you want to delete books ,please enter 'd'.       ***" << endl;
-	cout << "*** If you want to borrow books ,please enter 'b'.       ***" << endl;
-	cout << "*** If you want to return books ,please enter 'r'.       ***" << endl;
-	cout << "*** If you want to view a book ,please enter 'f'.        ***" << endl;
-	cout << "*** If you want to view all books ,please enter 'p'.     ***" << endl;
-	cout << "*** If you want to quit this system ,please enter 'q'.   ***" << endl;
-	cout << "***                                                      ***" << endl;
-	cout << "***                            All Copyright by Walker.  ***" << endl;
-	cout << "************************************************************" << endl;
+	cout << "*************************************************************" << endl;
+	cout << "***      Welcome to the Book Managerment System.          ***" << endl;
+	cout << "*** Before you use these system,                          ***" << endl;
+	cout << "*** Please read these instructions carefully.             ***" << endl;
+	cout << "*** a:If you want to add books ,please enter 'a'.         ***" << endl;
+	cout << "*** d:If you want to delete books ,please enter 'd'.      ***" << endl;
+	cout << "*** b:If you want to borrow books ,please enter 'b'.      ***" << endl;
+	cout << "*** r:If you want to return books ,please enter 'r'.      ***" << endl;
+	cout << "*** f:If you want to view a book ,please enter 'f'.       ***" << endl;
+	cout << "*** p:If you want to view all books ,please enter 'p'.    ***" << endl;
+	cout << "*** q:If you want to quit this system ,please enter 'q'.  ***" << endl;
+	cout << "***                                                       ***" << endl;
+	cout << "***                            All Copyright by Walker.   ***" << endl;
+	cout << "*************************************************************" << endl;
 	//cout << "Now, we will give you several soconds to read these instructions." << endl;
 	//for (int i = 0; i < NUM; i++) {};
 	cout << endl;
@@ -85,6 +85,7 @@ int main()
 	cout << endl;
 	cout << "You has quited this system." << endl;
 	cout << "Please enter carriage return to continue......." << endl;
+	cin.get();
 	cin.get();
 	return 0;
 }
