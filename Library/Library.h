@@ -26,20 +26,19 @@ class Book {
 	//string Writer;
 	int Repertory_number;
 	int Remain_number;
-	bool book_status;
 
 	map<string,Single_Book> Same_Book;
 
 public:
 	Book();
-	Book(string, int, bool);
+	Book(string, int);
 	bool is_exist(const string & t_id) const;
 	bool is_exist_not_borrowed(const string & t_id) const;
 	bool is_exist_borrowed(const string & t_id) const; 
 	void Add();
 	bool Decrease();
 	bool can_delete_all() const;
-	bool get_status() { return book_status; }
+	bool get_status() { return Remain_number; }
 	bool Borrow();
 	bool Return();
 	void Print() const;

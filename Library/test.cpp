@@ -3,7 +3,7 @@
 #include "Library.h"
 using std::string;
 
-#define NUM 2000000000
+//#define NUM 2000000000
 
 
 
@@ -19,12 +19,13 @@ int main()
 	cout << "*** If you want to borrow books ,please enter 'b'.       ***" << endl;
 	cout << "*** If you want to return books ,please enter 'r'.       ***" << endl;
 	cout << "*** If you want to view a book ,please enter 'f'.        ***" << endl;
+	cout << "*** If you want to view all books ,please enter 'p'.     ***" << endl;
 	cout << "*** If you want to quit this system ,please enter 'q'.   ***" << endl;
 	cout << "***                                                      ***" << endl;
 	cout << "***                            All Copyright by Walker.  ***" << endl;
 	cout << "************************************************************" << endl;
-	cout << "Now, we will give you several soconds to read these instructions." << endl;
-	//for (int i = 0; i < 20000; i++) {};
+	//cout << "Now, we will give you several soconds to read these instructions." << endl;
+	//for (int i = 0; i < NUM; i++) {};
 	cout << endl;
 	cout << "Ok, now you have read these instructions." << endl;
 	cout << "Please enter carriage return to continue......." << endl;

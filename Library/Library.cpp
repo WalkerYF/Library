@@ -10,6 +10,7 @@ using std::setw;
 
 int Book::seed = 0;
 
+//This function can change number of int type into string object
 string change_int_to_string(int t_number)
 {
 	int other_digit = t_number / 10;
@@ -20,6 +21,8 @@ string change_int_to_string(int t_number)
 	}
 
 	return change_int_to_string(other_digit) + char(unit_digit + 48);
+
+// this is another version of this function without recursion.
 
 	//int unit_digit = t_number % 10;
 	//int other_digit = t_number / 10;
@@ -42,6 +45,7 @@ Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 	book_status = t_status;
 }
 
+
 void Single_Book::Print() const
 {
 	cout << setw(8)  << Id 
@@ -50,7 +54,7 @@ void Single_Book::Print() const
 		 << endl;
 }
 
-
+// control the book status
 void Single_Book::set_status()
 {
 	book_status = !book_status;
@@ -62,17 +66,17 @@ Book::Book()
 	Book_Name = "No name.";
 	Repertory_number = 0;
 	Remain_number = 0;
-	book_status = false;
 }
 
 
-Book::Book(string t_name, int t_rep_number = 0, bool t_status = false)
+Book::Book(string t_name, int t_rep_number = 0)
 {
 	Book_Name = t_name;
 	Remain_number = Repertory_number = t_rep_number;
-	book_status = t_status;
 }
 
+//This funcion is to judge whether this book exist.
+//If exists, return true.
 bool Book::is_exist(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
@@ -85,6 +89,7 @@ bool Book::is_exist(const string & t_id) const
 	return true;
 }
 
+//If this book exists and is not borrowed, return true.
 bool Book::is_exist_not_borrowed(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
@@ -102,7 +107,7 @@ bool Book::is_exist_not_borrowed(const string & t_id) const
 	}
 	return true;
 }
-
+//If this book exists and is borrowed, return true.
 bool Book::is_exist_borrowed(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
@@ -121,12 +126,10 @@ bool Book::is_exist_borrowed(const string & t_id) const
 	return true;;
 }
 
+// increase the number of this book.
+// and initialize the id of this book. 
 void Book::Add()
 {
-	if (book_status == false)
-	{
-		book_status = true;
-	}
 	Repertory_number++;
 	Remain_number++;
 	seed++;
@@ -136,6 +139,9 @@ void Book::Add()
 	Same_Book.insert ({ t_id, Single_Book(t_id, Book_Name, true) });
 } 
 
+// if this book has not been borrowed and the number of it is only one.
+// return true.
+// It means that this kind of book can delete from the Library_Book container.
 bool Book::can_delete_all() const
 {
 	if (Repertory_number == Remain_number && Remain_number == 1)
@@ -143,6 +149,7 @@ bool Book::can_delete_all() const
 	else
 		return false;
 }
+
 
 bool Book::Decrease()
 {
@@ -174,17 +181,19 @@ bool Book::Decrease()
 	}
 }
 
+
 bool Book::Borrow()
 {
 	if (get_status() == false)
 	{
 		cout << "All of this kind of books has been borrowed." << endl
 			<< "You can not borrow this book." << endl;
+		cout << endl;
 		return false;
 	}
 	else
 	{
-		cout << "Please write down the id of your book." << endl;
+		cout << "Please write down the id of the book which you want to borrow." << endl;
 		string t_id;
 		cin >> t_id;
 
@@ -192,8 +201,6 @@ bool Book::Borrow()
 		{
 			Same_Book[t_id].set_status();
 			Remain_number--;
-			//reflesh the status of book.
-			book_status = (Remain_number) ? true : false;
 			cout << "You has borrowed this book successfully!" << endl;
 			cout << endl;
 			return true;
@@ -204,6 +211,7 @@ bool Book::Borrow()
 		}
 	}
 }
+
 
 bool Book::Return()
 {
@@ -221,7 +229,6 @@ bool Book::Return()
 	{
 		Same_Book[t_id].set_status();
 		Remain_number++;
-		book_status = true;
 		cout << "You has returned this book successfully" << endl;
 		cout << endl;
 		return true;
@@ -233,6 +240,7 @@ bool Book::Return()
 
 }
 
+
 void Book::Print() const
 {
 	cout << endl;
@@ -243,17 +251,19 @@ void Book::Print() const
 		 << endl;
 	for (auto i : Same_Book)
 		i.second.Print();
+	cout << "--------------------------" << endl;
 	cout << "total | remain:" 
 		 << setw(5) << Repertory_number 
 		 << "|" 
 		 << setw(5) << Remain_number << endl;
 }
 
+//If this book is exist, return true.
 bool Library::is_exist(const string & t_name) const
 {
 	auto find_this_book = Library_Book.find(t_name);
 	if (find_this_book == Library_Book.end())
-		// can not find this book, so fail to borrow this book.
+	// can not find this book.
 	{
 		cout << "This book are not exist in this library." << endl;
 		cout << endl;
@@ -294,6 +304,7 @@ bool Library::add_book()
 	return true;
 }
 
+//delete a book or a kind of books according the number of books.
 bool Library::delete_book()
 {
 	string t_name;
@@ -327,8 +338,10 @@ bool Library::borrow_book()
 	cout << "Please write down the book name which you want to borrow:" << endl;
 	cin >> t_name;
 	if ( is_exist(t_name) )
-	// can not find this book, so fail to borrow this book.
+	// can find this book.
 	{
+		cout << endl;
+		Library_Book[t_name].Print();
 		return Library_Book[t_name].Borrow();
 	}
 	else
