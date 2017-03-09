@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include "Library.h"
+using std::string;
 
 #define NUM 2000000000
-
 
 
 
@@ -29,6 +29,7 @@ int main()
 	cout << "Ok, now you have read these instructions." << endl;
 	cout << "Please enter any key to continue......." << endl;
 	system("pause");
+
 
 	string choice;
 	Library library;
@@ -73,6 +74,7 @@ int main()
 		{
 			cout << "Your commamd is invalid." << endl;
 			cout << "Please enter the command again." << endl;
+			cout << endl;
 			break;
 		}
 		}

@@ -8,6 +8,32 @@ using std::cout;
 using std::endl;
 using std::setw;
 
+int Book::seed = 0;
+
+string change_int_to_string(int t_number)
+{
+	int other_digit = t_number / 10;
+	int unit_digit = t_number % 10;
+	if (other_digit == 0)
+	{
+		return string(1, char(unit_digit + 48));
+	}
+
+	return change_int_to_string(other_digit) + char(unit_digit + 48);
+
+	//int unit_digit = t_number % 10;
+	//int other_digit = t_number / 10;
+	//string result = "";
+	//while (other_digit)
+	//{
+	//	result = string(1,char(unit_digit + 48)) + result;
+	//	unit_digit = other_digit % 10;
+	//	other_digit = other_digit / 10;
+	//}
+	//result = char(unit_digit + 48) + result;
+	//return result;
+}
+
 
 Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 {
@@ -16,7 +42,7 @@ Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 	book_status = t_status;
 }
 
-void Single_Book::Print()
+void Single_Book::Print() const
 {
 	cout << setw(8)  << Id 
 		 << setw(10) << Book_Name 
@@ -47,7 +73,7 @@ Book::Book(string t_name, int t_rep_number = 0, bool t_status = false)
 	book_status = t_status;
 }
 
-bool Book::is_exist(string t_id)
+bool Book::is_exist(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
 	if (find_single_book == Same_Book.end())
@@ -59,7 +85,7 @@ bool Book::is_exist(string t_id)
 	return true;
 }
 
-bool Book::is_exist_not_borrowed(string t_id)
+bool Book::is_exist_not_borrowed(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
 	if (find_single_book == Same_Book.end())
@@ -77,7 +103,7 @@ bool Book::is_exist_not_borrowed(string t_id)
 	return true;
 }
 
-bool Book::is_exist_borrowed(string t_id)
+bool Book::is_exist_borrowed(const string & t_id) const
 {
 	auto find_single_book = Same_Book.find(t_id);
 	if (find_single_book == Same_Book.end())
@@ -103,13 +129,14 @@ void Book::Add()
 	}
 	Repertory_number++;
 	Remain_number++;
-	string t_id = Book_Name + char(Repertory_number+48);
+	seed++;
+	string t_id = Book_Name + change_int_to_string(seed);
 	//the generation of id
 /////////////////////////////////////////
 	Same_Book.insert ({ t_id, Single_Book(t_id, Book_Name, true) });
-}
+} 
 
-bool Book::can_delete_all()
+bool Book::can_delete_all() const
 {
 	if (Repertory_number == Remain_number && Remain_number == 1)
 		return true;
@@ -206,7 +233,7 @@ bool Book::Return()
 
 }
 
-void Book::Print()
+void Book::Print() const
 {
 	cout << endl;
 	cout << "Book's name: " << Book_Name << endl;
@@ -222,13 +249,14 @@ void Book::Print()
 		 << setw(5) << Remain_number << endl;
 }
 
-bool Library::is_exist(string t_name)
+bool Library::is_exist(const string & t_name) const
 {
 	auto find_this_book = Library_Book.find(t_name);
 	if (find_this_book == Library_Book.end())
 		// can not find this book, so fail to borrow this book.
 	{
 		cout << "This book are not exist in this library." << endl;
+		cout << endl;
 		return false;
 	}
 	return true;
@@ -244,12 +272,14 @@ bool Library::add_book()
 	{
 		cout << "This book exists." << endl;
 		cout << "We will increase the number of this book." << endl;
+		cout << endl;
 	}
 
 	else
 	// can not find this book, so create a new kind of book object.
 	{
-		cout << "You may enter extra information about this book to create a record." << endl;
+		cout << "Add this book successfully." << endl;
+		cout << endl;
 
 		//maybe some more information.
 /////////////////////////////////////////////
@@ -267,7 +297,7 @@ bool Library::add_book()
 bool Library::delete_book()
 {
 	string t_name;
-	cout << "Please write down the book name which you want to add:" << endl;
+	cout << "Please write down the book name which you want to delete:" << endl;
 	cin >> t_name;
 
 	if (is_exist(t_name))
@@ -331,6 +361,7 @@ bool Library::find_book()
 	if (is_exist(t_name))
 	{
 		Library_Book[t_name].Print();
+		cout << endl;
 		return true;
 	}
 	else
@@ -339,8 +370,9 @@ bool Library::find_book()
 	}
 }
 
-void Library::print_book()
+void Library::print_book() const
 {
 	for (auto i : Library_Book)
 		i.second.Print();
+	cout << endl;
 }

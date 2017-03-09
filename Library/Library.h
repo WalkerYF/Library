@@ -16,12 +16,14 @@ class Single_Book{
 public:
 	Single_Book() {};
 	Single_Book(string, string, bool);
-	void Print();
+	void Print() const;
 	void set_status();
-	bool get_status() { return book_status; }
+	bool get_status() const { return book_status; }
 };
 
 class Book {
+	static int seed;
+
 	string Book_Name;
 	//string Writer;
 	int Repertory_number;
@@ -33,16 +35,16 @@ class Book {
 public:
 	Book();
 	Book(string, int, bool);
-	bool is_exist(string t_id);
-	bool is_exist_not_borrowed(string t_id);
-	bool is_exist_borrowed(string t_id);
+	bool is_exist(const string & t_id) const;
+	bool is_exist_not_borrowed(const string & t_id) const;
+	bool is_exist_borrowed(const string & t_id) const; 
 	void Add();
 	bool Decrease();
-	bool can_delete_all();
+	bool can_delete_all() const;
 	bool get_status() { return book_status; }
 	bool Borrow();
 	bool Return();
-	void Print();
+	void Print() const;
 };
 
 
@@ -51,12 +53,12 @@ class Library {
 	friend class Book;
 	map<string, Book> Library_Book;
 public:
-	bool is_exist(string t_name);
+	bool is_exist(const string & t_name) const;
 	bool add_book();
 	bool delete_book();
 	bool borrow_book();
 	bool return_book();
 	bool find_book();
-	void print_book();
+	void print_book() const;
 };
 
