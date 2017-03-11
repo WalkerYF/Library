@@ -49,7 +49,7 @@ Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 void Single_Book::Print() const
 {
 	cout << setw(8)  << Id 
-		 << setw(10) << Book_Name 
+		 << setw(15) << Book_Name 
 		 << setw(8)  << ((book_status) ? "Yes" : "No" )
 		 << endl;
 }
@@ -163,7 +163,7 @@ bool Book::Decrease()
 	{
 		cout << "Please write down the id of your book." << endl;
 		string t_id;
-		cin >> t_id;
+		getline(cin, t_id);
 
 		if (is_exist_not_borrowed(t_id))
 		{
@@ -195,7 +195,7 @@ bool Book::Borrow()
 	{
 		cout << "Please write down the id of the book which you want to borrow." << endl;
 		string t_id;
-		cin >> t_id;
+		getline(cin, t_id);
 
 		if (is_exist_not_borrowed(t_id))
 		{
@@ -223,7 +223,7 @@ bool Book::Return()
 	}
 	cout << "Please write down the id of your book." << endl;
 	string t_id;
-	cin >> t_id;
+	getline(cin, t_id);
 
 	if (is_exist_borrowed(t_id))
 	{
@@ -246,7 +246,7 @@ void Book::Print() const
 	cout << endl;
 	cout << "Book's name: " << Book_Name << endl;
 	cout << setw(8)  << "id"
-		 << setw(10) << "name"
+		 << setw(15) << "name"
 		 << setw(8)  << "status" 
 		 << endl;
 	for (auto i : Same_Book)
@@ -276,7 +276,8 @@ bool Library::add_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to add:" << endl;
-	cin >> t_name;
+
+	getline(cin, t_name);
 	if ( is_exist(t_name	)) 
 
 	{
@@ -309,8 +310,7 @@ bool Library::delete_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to delete:" << endl;
-	cin >> t_name;
-
+	getline(cin, t_name);
 	if (is_exist(t_name))
 	{
 		if (Library_Book[t_name].can_delete_all())
@@ -336,7 +336,7 @@ bool Library::borrow_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to borrow:" << endl;
-	cin >> t_name;
+	getline(cin, t_name);
 	if ( is_exist(t_name) )
 	// can find this book.
 	{
@@ -354,7 +354,7 @@ bool Library::return_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to return:" << endl;
-	cin >> t_name;
+	getline(cin, t_name);
 	if (is_exist(t_name))
 	{
 		return Library_Book[t_name].Return();
@@ -370,7 +370,8 @@ bool Library::find_book()
 {
 	string t_name;
 	cout << "Please write down the book name which you want to find:" << endl;
-	cin >> t_name;
+
+	getline(cin, t_name);
 	if (is_exist(t_name))
 	{
 		Library_Book[t_name].Print();

@@ -29,7 +29,8 @@ int main()
 	cout << endl;
 	cout << "Ok, now you have read these instructions." << endl;
 	cout << "Please enter carriage return to continue......." << endl;
-	cin.get();
+	while (cin.get() != '\n')
+		continue;
 	string choice;
 	Library library;
 
@@ -37,6 +38,8 @@ int main()
 
 	while ( cin >> choice && choice != "q")
 	{
+		while (cin.get() != '\n')
+			continue;
 		switch (choice[0])
 		{
 		case 'a':
