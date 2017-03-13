@@ -1,5 +1,5 @@
 cc=g++
-exe=main
+exe=main.out
 obj=Library.o test.o
 add=-std=c++11 -Wall
 
