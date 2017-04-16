@@ -1,0 +1,53 @@
+#case 1
+
+a
+c++ primer
+a
+c++ primer
+a
+c++ primerplus
+a
+c++ primerplus
+b
+c++ primer
+c++ primer1
+f
+c++ primer
+p
+r
+c++ primer
+c++ primer1
+p
+d
+c++ primer
+c++ primer1
+p
+q
+
+# case 2
+
+a
+book
+a
+book
+p
+b
+book
+book1
+b
+book
+book1
+d
+book
+book1
+p
+r
+book
+book1
+d
+book
+book1
+p
+q
+
+

@@ -48,7 +48,7 @@ Single_Book::Single_Book(string t_id, string t_name, bool t_status = true)
 
 void Single_Book::Print() const
 {
-	cout << setw(15)  << Id 
+	cout << setw(8)  << Id 
 		 << setw(15) << Book_Name 
 		 << setw(8)  << ((book_status) ? "Yes" : "No" )
 		 << endl;
@@ -245,7 +245,7 @@ void Book::Print() const
 {
 	cout << endl;
 	cout << "Book's name: " << Book_Name << endl;
-	cout << setw(15)  << "id"
+	cout << setw(8)  << "id"
 		 << setw(15) << "name"
 		 << setw(8)  << "status" 
 		 << endl;
